@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#6c2bd9" />
+  <title>FreshDash – Groceries in 10 minutes</title>
+  <meta name="description" content="FreshDash is a quick-delivery grocery web app demo built with HTML, CSS and JavaScript." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <span class="logo">⚡</span>
+        <div>
+          <div class="brand-name">FreshDash</div>
+          <button class="location" id="locationBtn" aria-label="Change delivery location">
+            <strong>Delivery in 10 mins</strong>
+            <span id="locationText">Sector 62, Noida ▾</span>
+          </button>
+        </div>
+      </div>
+      <button class="cart-btn" id="openCart" aria-label="Open cart">
+        🛒 <span id="cartCount" class="badge">0</span>
+        <span class="cart-total" id="headerTotal"></span>
+      </button>
+    </div>
+    <div class="wrap">
+      <label class="search">
+        <span aria-hidden="true">🔍</span>
+        <input id="search" type="search" placeholder='Search "milk", "chips", "apples"…' autocomplete="off" />
+      </label>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-label="Offer">
+      <div>
+        <p class="hero-tag">Free delivery above ₹199</p>
+        <h1>Groceries at your door in <span>10 minutes</span></h1>
+        <p>Use code <b>FIRST20</b> for 20% off your first order.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">🛵💨</div>
+    </section>
+
+    <nav class="chips" id="chips" aria-label="Categories"></nav>
+
+    <div class="toolbar">
+      <h2 id="sectionTitle">All products</h2>
+      <label class="sort">
+        Sort
+        <select id="sort">
+          <option value="rel">Relevance</option>
+          <option value="low">Price: low to high</option>
+          <option value="high">Price: high to low</option>
+          <option value="off">Biggest discount</option>
+        </select>
+      </label>
+    </div>
+
+    <section id="grid" class="grid" aria-live="polite"></section>
+    <p id="empty" class="empty" hidden>No items found. Try another search 🙈</p>
+  </main>
+
+ 
+
+  <!-- floating cart bar (mobile) -->
+  <button class="floating-cart" id="floatingCart" hidden>
+    <span id="floatingText"></span>
+    <span>View cart ›</span>
+  </button>
+
+  <!-- cart drawer -->
+  <div class="overlay" id="overlay" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Your cart">
+    <div class="drawer-head">
+      <h2>Your cart</h2>
+      <button class="icon-btn" id="closeCart" aria-label="Close cart">✕</button>
+    </div>
+    <div class="drawer-body" id="cartBody"></div>
+    <div class="drawer-foot" id="cartFoot"></div>
+  </aside>
+
+  <!-- checkout modal -->
+  <div class="modal" id="checkout" hidden role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <form class="modal-card" id="checkoutForm" novalidate>
+      <div class="drawer-head">
+        <h2 id="checkoutTitle">Checkout</h2>
+        <button type="button" class="icon-btn" id="closeCheckout" aria-label="Close checkout">✕</button>
+      </div>
+      <label>Full name
+        <input name="name" required minlength="2" placeholder="Khushi Kumari" />
+        <small class="err" data-for="name"></small>
+      </label>
+      <label>Phone number
+        <input name="phone" required inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" />
+        <small class="err" data-for="phone"></small>
+      </label>
+      <label>Delivery address
+        <textarea name="address" rows="2" required minlength="8" placeholder="House no., street, landmark"></textarea>
+        <small class="err" data-for="address"></small>
+      </label>
+      <fieldset>
+        <legend>Payment</legend>
+        <label class="radio"><input type="radio" name="pay" value="UPI" checked /> UPI</label>
+        <label class="radio"><input type="radio" name="pay" value="Card" /> Card</label>
+        <label class="radio"><input type="radio" name="pay" value="Cash on delivery" /> Cash on delivery</label>
+      </fieldset>
+      <div class="summary-line"><span>To pay</span><strong id="checkoutTotal"></strong></div>
+      <button type="submit" class="primary">Place order</button>
+    </form>
+  </div>
+
+  <!-- order tracking -->
+  <div class="modal" id="tracking" hidden role="dialog" aria-modal="true" aria-labelledby="trackTitle">
+    <div class="modal-card center">
+      <div class="big" id="trackEmoji">✅</div>
+      <h2 id="trackTitle">Order placed!</h2>
+      <p id="trackSub" class="muted"></p>
+      <ol class="steps" id="steps">
+        <li data-step="0">Order confirmed</li>
+        <li data-step="1">Packing your items</li>
+        <li data-step="2">Out for delivery</li>
+        <li data-step="3">Delivered</li>
+      </ol>
+      <div class="eta" id="eta"></div>
+      <button class="primary" id="trackDone" hidden>Continue shopping</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
